@@ -6,6 +6,7 @@ class CalorieCompanionApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         FoodRepository.initialize(this)
+        TrainingRepository.initialize(this)
     }
 
 }

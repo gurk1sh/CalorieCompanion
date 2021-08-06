@@ -8,6 +8,4 @@ data class Food (@PrimaryKey val id: UUID = UUID.randomUUID(), var name: String 
     val photoFileName
             get() = "IMG_$id.jpg"
 
-    var calories = (protein*4) + (fat*8) + (carbohydrates*4)
-
 }

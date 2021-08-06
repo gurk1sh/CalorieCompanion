@@ -11,4 +11,6 @@
     <string name="fat">Enter amount of fat / 100g</string>
     <string name="carbohydrates">Enter amount of carbohydrates / 100g</string>
     <string name="food_category">Choose food category</string>
+    <string name="foodText">Placeholder</string>
+    <string name="training">Training list</string>
 </resources>

@@ -17,6 +17,7 @@
 
     <style name="Theme.padding" parent="Theme.AppCompat">
         <item name="android:padding">5dp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 </resources>

@@ -23,7 +23,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/training_name"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                style="@style/Theme.padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="placeholder" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,42 +43,14 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/breakfast_food_name"
+                    android:id="@+id/training_calories"
                     style="@style/Theme.padding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="placeholder" />
 
                 <TextView
-                    android:id="@+id/breakfast_food_category"
-                    style="@style/Theme.padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="placeholder" />
-
-                <TextView
-                    android:id="@+id/breakfast_food_calories"
-                    style="@style/Theme.padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="placeholder" />
-
-                <TextView
-                    android:id="@+id/breakfast_food_protein"
-                    style="@style/Theme.padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="placeholder" />
-
-                <TextView
-                    android:id="@+id/breakfast_food_fat"
-                    style="@style/Theme.padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="placeholder" />
-
-                <TextView
-                    android:id="@+id/breakfast_food_carbohydrates"
+                    android:id="@+id/training_time"
                     style="@style/Theme.padding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

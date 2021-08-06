@@ -53,7 +53,7 @@
             android:text="@string/food_name_label" />
 
         <EditText
-            android:id="@+id/food_name"
+            android:id="@+id/breakfast_food_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/food_name_hint" />
@@ -73,7 +73,7 @@
                 android:text="@string/food_details_label" />
 
             <Spinner
-                android:id="@+id/food_category"
+                android:id="@+id/breakfast_food_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog"
@@ -81,21 +81,21 @@
 
             <EditText
                 android:inputType= "number"
-                android:id="@+id/food_protein"
+                android:id="@+id/breakfast_food_protein"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/protein" />
 
             <EditText
                 android:inputType= "number"
-                android:id="@+id/food_fat"
+                android:id="@+id/breakfast_food_fat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fat" />
 
             <EditText
                 android:inputType= "number"
-                android:id="@+id/food_carbohydrates"
+                android:id="@+id/breakfast_food_carbohydrates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/carbohydrates" />

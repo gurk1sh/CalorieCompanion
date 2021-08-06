@@ -4,13 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import se.umu.cs.guth0028.caloriecompanionapp.R
 import java.util.*
 
 private const val TAG = "FoodListFragment"
@@ -96,7 +94,11 @@ class FoodListFragment : Fragment() {
 
         private lateinit var food: Food
 
-        private val titleTextView: TextView = itemView.findViewById(R.id.food_name)
+        private val nameTextView: TextView = itemView.findViewById(R.id.breakfast_food_name)
+        private val proteinTextView: TextView = itemView.findViewById(R.id.breakfast_food_protein)
+        private val fatTextView: TextView = itemView.findViewById(R.id.breakfast_food_fat)
+        private val calorieTextView: TextView = itemView.findViewById(R.id.breakfast_food_calories)
+        private val carbohydratesTextView: TextView = itemView.findViewById(R.id.breakfast_food_carbohydrates)
 
         init {
             itemView.setOnClickListener(this)
@@ -104,7 +106,12 @@ class FoodListFragment : Fragment() {
 
         fun bind(food: Food) {
             this.food = food
-            titleTextView.text = this.food.name
+            nameTextView.text = this.food.name
+            proteinTextView.text = this.food.protein.toString()
+            fatTextView.text = this.food.fat.toString()
+            carbohydratesTextView.text = this.food.carbohydrates.toString()
+            val calorieCalc = CalorieCalculator(this.food.protein,this.food.fat,this.food.carbohydrates)
+            calorieTextView.text = calorieCalc.calories.toString()
         }
 
         override fun onClick(v: View?) {

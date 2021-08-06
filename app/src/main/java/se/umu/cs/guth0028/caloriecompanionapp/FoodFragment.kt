@@ -14,7 +14,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
@@ -35,6 +34,10 @@ class FoodFragment : Fragment(),  FragmentResultListener {
     private lateinit var photoFile: File
     private lateinit var photoUri: Uri
     private lateinit var foodName: EditText
+    private lateinit var foodCategory: Spinner
+    private lateinit var foodProtein: EditText
+    private lateinit var foodFat: EditText
+    private lateinit var foodCarbohydrates: EditText
     private lateinit var saveButton: Button
     private lateinit var photoButton: ImageButton
     private lateinit var photoView: ImageView
@@ -63,7 +66,11 @@ class FoodFragment : Fragment(),  FragmentResultListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_food, container, false)
-        foodName = view.findViewById(R.id.food_name) as EditText
+        foodName = view.findViewById(R.id.breakfast_food_name) as EditText
+        foodCategory =  view.findViewById(R.id.breakfast_food_category) as Spinner
+        foodProtein = view.findViewById(R.id.breakfast_food_protein) as EditText
+        foodFat = view.findViewById(R.id.breakfast_food_fat) as EditText
+        foodCarbohydrates = view.findViewById(R.id.breakfast_food_carbohydrates) as EditText
         saveButton = view.findViewById(R.id.save_food) as Button
         photoButton = view.findViewById(R.id.food_camera) as ImageButton
         photoView = view.findViewById(R.id.food_photo) as ImageView
@@ -100,22 +107,11 @@ class FoodFragment : Fragment(),  FragmentResultListener {
     override fun onStart() {
         super.onStart()
 
-        val titleWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // This space intentionally left blank
+        addTextChangedListener(foodName)
+        addTextChangedListener(foodProtein)
+        addTextChangedListener(foodFat)
+        addTextChangedListener(foodCarbohydrates)
 
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                food.name = s.toString()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                // This space intentionally left blank
-
-            }
-        }
-        foodName.addTextChangedListener(titleWatcher)
 
         saveButton.setOnClickListener {
             if (foodName.length() != 0) {
@@ -154,16 +150,6 @@ class FoodFragment : Fragment(),  FragmentResultListener {
         callbacks = context as Callbacks?
     }
 
-    override fun onStop() {
-        super.onStop()
-    }
-
-    /*override fun onDetach() {
-        super.onDetach()
-        requireActivity().revokeUriPermission(photoUri,
-            Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-    }*/
-
     private fun updateUI() {
         foodName.setText(food.name)
 
@@ -182,6 +168,39 @@ class FoodFragment : Fragment(),  FragmentResultListener {
     override fun onDetach() {
         super.onDetach()
         callbacks = null
+    }
+
+    fun addTextChangedListener(editText: EditText) {
+        val nameWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // This space intentionally left blank
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                when (editText) {
+                    foodName -> {
+                        food.name = s.toString()
+                    }
+                    foodProtein -> {
+                        food.protein = s.toString().toFloat()
+                    }
+                    foodFat -> {
+                        food.fat = s.toString().toFloat()
+                    }
+                    foodCarbohydrates -> {
+                        food.carbohydrates = s.toString().toFloat()
+                    }
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // This space intentionally left blank
+
+            }
+        }
+        editText.addTextChangedListener(nameWatcher)
     }
 
     companion object {

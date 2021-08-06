@@ -13,7 +13,7 @@ abstract class FoodDatabase : RoomDatabase() {
 
 }
 
-val migration_1_2 = object : Migration(1, 2) {
+val food_migration_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL(
             "ALTER TABLE Food ADD COLUMN test TEXT NOT NULL DEFAULT ''"

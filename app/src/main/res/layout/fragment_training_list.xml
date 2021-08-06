@@ -14,19 +14,19 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/food_type"
+            android:id="@+id/training"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="15dp"
-            android:text="Placeholder" />
+            android:text="@string/training" />
 
         <SearchView
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/food_recycler_view"
+            android:id="@+id/training_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
