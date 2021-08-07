@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import java.io.File
 import java.util.*
 
-class FoodDetailViewModel() : ViewModel() {
+class FoodDetailViewModel() : ViewModel() { //Viewmodel holding food objects to avoid unnecessary fetching from database
 
     private val foodRepository = FoodRepository.get()
     private val foodIdLiveData = MutableLiveData<UUID>()

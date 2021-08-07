@@ -6,7 +6,7 @@ import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.Training
 import java.util.*
 
 @Dao
-interface TrainingDao {
+interface TrainingDao { //Data access object that fetches training data from DB with specific queries
 
     @Query("SELECT * FROM training")
     fun getAllTraining(): LiveData<List<Training>>

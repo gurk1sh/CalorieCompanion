@@ -8,4 +8,8 @@ data class Food (@PrimaryKey val id: UUID = UUID.randomUUID(), var name: String 
     val photoFileName
             get() = "IMG_$id.jpg"
 
+    /*
+    * Represents a food per 100g weight
+    * */
+
 }

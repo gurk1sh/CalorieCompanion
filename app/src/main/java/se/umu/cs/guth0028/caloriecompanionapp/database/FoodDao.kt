@@ -6,7 +6,7 @@ import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Food
 import java.util.*
 
 @Dao
-interface FoodDao {
+interface FoodDao { //Data access object that fetches food data from DB with specific queries
 
     @Query("SELECT * FROM food")
     fun getFoods(): LiveData<List<Food>> //mutableListOfFood

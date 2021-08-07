@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import se.umu.cs.guth0028.caloriecompanionapp.database.FoodDatabase
-import se.umu.cs.guth0028.caloriecompanionapp.database.food_migration_1_2
 import java.io.File
 import java.util.*
 import java.util.concurrent.Executors
@@ -17,8 +16,7 @@ class FoodRepository private constructor(context: Context) {
         context.applicationContext,
         FoodDatabase::class.java,
         DATABASE_NAME
-    ).addMigrations(food_migration_1_2)
-        .build()
+    ).build()
 
     private val foodDao = database.foodDao()
     private val executor = Executors.newSingleThreadExecutor()

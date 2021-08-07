@@ -12,7 +12,7 @@ private const val ARG_DATE = "date"
 private const val ARG_REQUEST_CODE = "requestCode"
 private const val RESULT_DATE_KEY = "resultDateKey"
 
-class DatePickerFragment : DialogFragment() {
+class DatePickerFragment : DialogFragment() { //Not used
 
     interface Callbacks {
         fun onDateSelected(date: Date)

@@ -76,6 +76,11 @@ class FoodFragment : Fragment(),  FragmentResultListener {
         photoButton = view.findViewById(R.id.food_camera) as ImageButton
         photoView = view.findViewById(R.id.food_photo) as ImageView
         deleteButton = view.findViewById(R.id.delete_food)
+        photoFile = foodDetailViewModel.getPhotoFile(food)
+        photoUri = FileProvider.getUriForFile(requireActivity(),
+        "se.umu.cs.guth0028.caloriecompanionapp.fileprovider",
+        photoFile)
+
 
         return view
     }
@@ -91,7 +96,6 @@ class FoodFragment : Fragment(),  FragmentResultListener {
                     photoUri = FileProvider.getUriForFile(requireActivity(),
                         "se.umu.cs.guth0028.caloriecompanionapp.fileprovider",
                         photoFile)
-
                     updateUI()
                 }
             })
@@ -143,6 +147,7 @@ class FoodFragment : Fragment(),  FragmentResultListener {
                 }
                 startActivity(captureImage)
             }
+            updateUI()
         }
     }
 

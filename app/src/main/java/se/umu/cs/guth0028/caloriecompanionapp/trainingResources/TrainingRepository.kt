@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import se.umu.cs.guth0028.caloriecompanionapp.database.TrainingDatabase
-import se.umu.cs.guth0028.caloriecompanionapp.database.training_migration_1_2
 import java.util.*
 import java.util.concurrent.Executors
 
@@ -16,8 +15,7 @@ class TrainingRepository private constructor(context: Context) {
         context.applicationContext,
         TrainingDatabase::class.java,
         DATABASE_NAME
-    ).addMigrations(training_migration_1_2)
-        .build()
+    ).build()
 
     private val trainingDao = database.trainingDao()
     private val executor = Executors.newSingleThreadExecutor()
