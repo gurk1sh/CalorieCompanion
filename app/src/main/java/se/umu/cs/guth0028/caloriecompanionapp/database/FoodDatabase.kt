@@ -3,9 +3,9 @@ package se.umu.cs.guth0028.caloriecompanionapp.database
 import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import se.umu.cs.guth0028.caloriecompanionapp.Food
+import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Food
 
-@Database(entities = [ Food::class ], version=2)
+@Database(entities = [ Food::class ], version=2, exportSchema = false)
 @TypeConverters(FoodTypeConverters::class)
 abstract class FoodDatabase : RoomDatabase() {
 

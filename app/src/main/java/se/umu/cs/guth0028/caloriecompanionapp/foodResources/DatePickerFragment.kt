@@ -1,4 +1,4 @@
-package se.umu.cs.guth0028.caloriecompanionapp
+package se.umu.cs.guth0028.caloriecompanionapp.foodResources
 
 import android.app.DatePickerDialog
 import android.app.Dialog

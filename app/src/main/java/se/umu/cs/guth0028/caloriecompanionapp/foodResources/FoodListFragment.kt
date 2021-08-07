@@ -1,4 +1,4 @@
-package se.umu.cs.guth0028.caloriecompanionapp
+package se.umu.cs.guth0028.caloriecompanionapp.foodResources
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import se.umu.cs.guth0028.caloriecompanionapp.R
 import java.util.*
 
 private const val TAG = "FoodListFragment"

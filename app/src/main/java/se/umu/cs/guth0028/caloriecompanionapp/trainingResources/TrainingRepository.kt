@@ -1,4 +1,4 @@
-package se.umu.cs.guth0028.caloriecompanionapp
+package se.umu.cs.guth0028.caloriecompanionapp.trainingResources
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -21,7 +21,6 @@ class TrainingRepository private constructor(context: Context) {
 
     private val trainingDao = database.trainingDao()
     private val executor = Executors.newSingleThreadExecutor()
-    private val filesDir = context.applicationContext.filesDir
 
     fun getAllTraining(): LiveData<List<Training>> = trainingDao.getAllTraining()
 

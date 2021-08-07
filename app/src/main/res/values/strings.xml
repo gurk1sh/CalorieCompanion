@@ -4,6 +4,7 @@
     <string name="food_name_label">Food Name</string>
     <string name="food_details_label">Details</string>
     <string name="new_food">Add Food</string>
+    <string name="new_training">Add Training</string>
     <string name="food_save_text">Save Food</string>
     <string name="delete_food_label">Delete Food</string>
     <string name="back_button">Back Button</string>
