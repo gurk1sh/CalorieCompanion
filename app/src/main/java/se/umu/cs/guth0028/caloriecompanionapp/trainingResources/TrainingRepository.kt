@@ -3,22 +3,23 @@ package se.umu.cs.guth0028.caloriecompanionapp.trainingResources
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
-import se.umu.cs.guth0028.caloriecompanionapp.database.TrainingDatabase
+import se.umu.cs.guth0028.caloriecompanionapp.database.CalorieDatabase
 import java.util.*
 import java.util.concurrent.Executors
 
-private const val DATABASE_NAME = "training-database"
+private const val DATABASE_NAME = "calorie-database"
 
 class TrainingRepository private constructor(context: Context) {
+//Training Repository fetching data from database and later pushing it inside of training ViewModels
 
-    private val database : TrainingDatabase = Room.databaseBuilder(
+    private val database : CalorieDatabase = Room.databaseBuilder(
         context.applicationContext,
-        TrainingDatabase::class.java,
+        CalorieDatabase::class.java,
         DATABASE_NAME
     ).build()
 
     private val trainingDao = database.trainingDao()
-    private val executor = Executors.newSingleThreadExecutor()
+    private val executor = Executors.newSingleThreadExecutor() //Executor instance running work from main thread, should be running from separate if bigger database
 
     fun getAllTraining(): LiveData<List<Training>> = trainingDao.getAllTraining()
 

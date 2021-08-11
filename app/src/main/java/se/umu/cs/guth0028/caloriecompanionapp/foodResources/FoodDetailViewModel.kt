@@ -1,5 +1,6 @@
 package se.umu.cs.guth0028.caloriecompanionapp.foodResources
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -7,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import java.io.File
 import java.util.*
 
-class FoodDetailViewModel() : ViewModel() { //Viewmodel holding food objects to avoid unnecessary fetching from database
+class FoodDetailViewModel : ViewModel() { //Viewmodel holding food objects to avoid unnecessary fetching from database
 
     private val foodRepository = FoodRepository.get()
     private val foodIdLiveData = MutableLiveData<UUID>()
@@ -36,6 +37,9 @@ class FoodDetailViewModel() : ViewModel() { //Viewmodel holding food objects to 
     fun getPhotoFile(food: Food): File {
         return foodRepository.getPhotoFile(food)
     }
+
+    val categoryListLivedata = foodRepository.getCategories() //this should maybe be a livedata object and change the getFoods to a mutableList
+
 
 
 }

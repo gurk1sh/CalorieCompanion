@@ -17,7 +17,13 @@
 
     <style name="Theme.padding" parent="Theme.AppCompat">
         <item name="android:padding">5dp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="BoldText" parent="Theme.AppCompat">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>

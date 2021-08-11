@@ -1,9 +1,10 @@
 package se.umu.cs.guth0028.caloriecompanionapp.database
 
 import androidx.room.*
+import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Category
 import java.util.*
 
-class FoodTypeConverters { //Converts the UUID so it can be saved in database and back to it's original type
+class CalorieTypeConverters { //Converts the UUID so it can be saved in database and back to it's original type
 
     @TypeConverter
     fun toUUID(uuid: String?): UUID? {

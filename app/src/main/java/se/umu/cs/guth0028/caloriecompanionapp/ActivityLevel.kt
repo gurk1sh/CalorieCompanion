@@ -1,5 +1,9 @@
 package se.umu.cs.guth0028.caloriecompanionapp
 
-enum class ActivityLevel {
-    SEDENTARY, LIGHTLYACTIVE, MODERATELYACTIVE, VERYACTIVE, EXTRAACTIVE
+class ActivityLevel {
+    companion object {
+        fun newInstance(): ArrayList<String> {
+            return arrayListOf("Sedentary", "Lightly active", "Moderately active", "Very active", "Extra active")
+        }
+    }
 }

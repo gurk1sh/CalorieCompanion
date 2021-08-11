@@ -9,6 +9,7 @@ class CalorieCompanionApplication : Application() {
         super.onCreate()
         FoodRepository.initialize(this)
         TrainingRepository.initialize(this)
+        UserRepository.initialize(this)
     }
 
 }
