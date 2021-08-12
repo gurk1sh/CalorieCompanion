@@ -1,10 +1,9 @@
-package se.umu.cs.guth0028.caloriecompanionapp
+package se.umu.cs.guth0028.caloriecompanionapp.userResources
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import se.umu.cs.guth0028.caloriecompanionapp.database.CalorieDatabase
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Food
 import java.util.*
 import java.util.concurrent.Executors
 
@@ -21,18 +20,25 @@ class UserRepository private constructor(context: Context) {
     private val userDao = database.userDao()
     private val executor = Executors.newSingleThreadExecutor() //Executor instance running work from main thread, should be running from separate if bigger database
 
-    fun getUser(): LiveData<User?> = userDao.getUser()
+    fun getUser(uuid: UUID?): LiveData<User?> = userDao.getUser(uuid)
 
-    fun getIfUserCreated(id: UUID): LiveData<Boolean?> = userDao.getIfUserCreated(id)
+    fun getUserWithoutID(): LiveData<List<User?>> = userDao.getUserWithoutID()
 
-    fun updateUser(user: User) {
+    fun updateUserGoal(user: User) {
         executor.execute {
-            userDao.updateUser(user)
+            userDao.updateUserGoal(user.goal)
+        }
+    }
+
+    fun updateUserCalories(user: User) {
+        executor.execute {
+            userDao.updateUserCalories(user.calories)
         }
     }
 
     fun addUser(user: User) {
         executor.execute {
+            //userDao.addUser(user.id,user.name,user.age,user.gender,user.weight,user.length,user.activityLevel, user.accountCreated)
             userDao.addUser(user)
         }
     }

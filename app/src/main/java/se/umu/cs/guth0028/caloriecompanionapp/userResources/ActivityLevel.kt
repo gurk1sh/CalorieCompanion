@@ -1,4 +1,4 @@
-package se.umu.cs.guth0028.caloriecompanionapp
+package se.umu.cs.guth0028.caloriecompanionapp.userResources
 
 class ActivityLevel {
     companion object {

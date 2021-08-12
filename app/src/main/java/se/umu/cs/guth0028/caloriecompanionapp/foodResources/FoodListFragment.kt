@@ -2,11 +2,12 @@ package se.umu.cs.guth0028.caloriecompanionapp.foodResources
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.*
-import android.widget.EditText
-import android.widget.TextView
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,6 @@ import se.umu.cs.guth0028.caloriecompanionapp.R
 import java.util.*
 
 private const val TAG = "FoodListFragment"
-private const val NEW_FOOD = "new_food"
 
 class FoodListFragment : Fragment() {
 
@@ -109,6 +109,10 @@ class FoodListFragment : Fragment() {
         private val calorieTextView: TextView = itemView.findViewById(R.id.food_calories)
         private val carbohydratesTextView: TextView = itemView.findViewById(R.id.food_carbohydrates)
         private val foodWeight: EditText = itemView.findViewById(R.id.numPicker)
+        private val addToDailySummaryButton: ImageButton = itemView.findViewById(R.id.addToDailySummaryButton)
+        private lateinit var foodCalorieCalc: FoodCalorieCalculator
+        private val rightSlider: ImageView = itemView.findViewById(R.id.rightSlider)
+        private val cardView: CardView = itemView.findViewById(R.id.cardView)
 
         init {
             itemView.setOnClickListener(this)
@@ -116,13 +120,22 @@ class FoodListFragment : Fragment() {
 
         fun bind(food: Food) { //set the textviews and calculate calories using fat,protein,carbs
             this.food = food
+            foodCalorieCalc = FoodCalorieCalculator(this.food.protein,this.food.fat,this.food.carbohydrates)
             nameTextView.text = this.food.name
             categoryTextView.text = this.food.category
             proteinTextView.text = getString(R.string.shortProtein, this.food.protein.toString())
             fatTextView.text = getString(R.string.shortFat, this.food.fat.toString())
             carbohydratesTextView.text = getString(R.string.shortCarbs, this.food.carbohydrates.toString())
-            val calorieCalc = CalorieCalculator(this.food.protein,this.food.fat,this.food.carbohydrates)
-            calorieTextView.text = getString(R.string.calories, calorieCalc.calories.toString())
+            calorieTextView.text = getString(R.string.calories, foodCalorieCalc.calories.toString())
+
+            val slideRight = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.slide_right)
+
+            addToDailySummaryButton.setOnClickListener {
+                var str: String = foodWeight.text.toString()
+                var float1 : Float = str.toFloat();
+                Log.d("gustaf", "${(float1/100)*foodCalorieCalc.calories }")
+                rightSlider.startAnimation(slideRight)
+            }
         }
 
         override fun onClick(v: View?) { //Start new fragment when clicking a list item

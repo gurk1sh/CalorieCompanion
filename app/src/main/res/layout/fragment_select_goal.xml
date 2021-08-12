@@ -42,6 +42,8 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/currentCalories"
                 app:layout_constraintBottom_toTopOf="@+id/genderGroup"
                 app:layout_constraintEnd_toStartOf="@+id/userCalorieTextView"
@@ -59,7 +61,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             <RadioGroup
-                android:id="@+id/genderGroup"
+                android:id="@+id/goalGroup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -105,7 +107,7 @@
                 android:text="@string/letsGo"
                 app:layout_constraintEnd_toEndOf="@+id/genderGroup"
                 app:layout_constraintStart_toStartOf="@+id/genderGroup"
-                app:layout_constraintTop_toBottomOf="@+id/genderGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/goalGroup" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -93,9 +93,14 @@ class FoodFragment : Fragment() {
                         "se.umu.cs.guth0028.caloriecompanionapp.fileprovider",
                         photoFile)
                     updateUI()
+
+                    observeCategoryList()
                 }
             })
+        observeCategoryList()
+    }
 
+    private fun observeCategoryList() {
         foodDetailViewModel.categoryListLivedata.observe(viewLifecycleOwner, Observer { category ->
             val spinnerAdapter =
                 context?.let { ArrayAdapter(it, R.layout.spinner_row, category) }
@@ -103,7 +108,7 @@ class FoodFragment : Fragment() {
 
             val foodCategoryPos = spinnerAdapter?.getPosition(food.category)
 
-            if (foodCategoryPos != null) { //FIXA BUG SÅ ATT SPINNERN INTE SÄTTER FEL TILL MEATS!
+            if (foodCategoryPos != null) {
                 foodCategorySpinner.setSelection(foodCategoryPos)
             }
         })

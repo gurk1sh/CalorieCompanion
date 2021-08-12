@@ -8,17 +8,6 @@
     android:theme="@style/Theme.calorieCompanionApp">
 
 
-    <ImageView
-        android:id="@+id/rightSlider"
-        android:layout_width="1000dp"
-        android:layout_height="0dp"
-        android:background="@color/green"
-        android:elevation="5dp"
-        android:translationZ="5dp"
-        app:layout_constraintBottom_toBottomOf="@id/cardView"
-        app:layout_constraintRight_toLeftOf="@id/cardView"
-        app:layout_constraintTop_toTopOf="@id/cardView" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -61,14 +50,6 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/calPer100"
-                        android:textColor="@color/grey"
-                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -78,18 +59,26 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/food_category"
-                        style="@style/Theme.padding"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="placeholder" />
-
-                    <TextView
                         android:id="@+id/food_calories"
                         style="@style/Theme.padding"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/calories" />
+
+                    <TextView
+                        android:id="@+id/food_weight"
+                        style="@style/Theme.padding"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Placeholder" />
+
+                    <TextView
+                        android:id="@+id/food_category"
+                        style="@style/Theme.padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="placeholder" />
 
                     <TextView
                         android:id="@+id/food_protein"
@@ -123,53 +112,7 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageButton
-                        android:id="@+id/addToDailySummaryButton"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_menu_add" />
-
-                    <EditText
-                        android:id="@+id/numPicker"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="100"
-                        android:inputType="number"
-                        android:maxWidth="48dp"
-                        android:text="@string/oneHundred"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/addToDailySummaryButton"
-                        app:layout_constraintStart_toStartOf="@+id/addToDailySummaryButton"
-                        app:layout_constraintTop_toBottomOf="@+id/addToDailySummaryButton">
-
-                    </EditText>
-
-                    <TextView
-                        android:id="@+id/textView56"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/g"
-                        android:textColor="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/numPicker"
-                        app:layout_constraintTop_toBottomOf="@+id/addToDailySummaryButton" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

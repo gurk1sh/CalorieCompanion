@@ -1,12 +1,12 @@
 package se.umu.cs.guth0028.caloriecompanionapp.database
 
 import androidx.room.*
-import se.umu.cs.guth0028.caloriecompanionapp.User
+import se.umu.cs.guth0028.caloriecompanionapp.userResources.User
 import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Category
 import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Food
 import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.Training
 
-@Database(entities = [ Food::class, Category::class, Training::class, User::class ], version=1, exportSchema = false) //Represents a food database
+@Database(entities = [ Food::class, Category::class, Training::class, User::class ], version=1, exportSchema = true) //Represents a food database
 @TypeConverters(CalorieTypeConverters::class)
 abstract class CalorieDatabase : RoomDatabase() {//Associate entity classes with the database
 

@@ -1,6 +1,5 @@
 package se.umu.cs.guth0028.caloriecompanionapp.foodResources
 
-class CalorieCalculator(var protein: Float, var fat: Float, var carbohydrates: Float) {
+class FoodCalorieCalculator(var protein: Float, var fat: Float, var carbohydrates: Float) {
     var calories = (protein*4) + (fat*8) + (carbohydrates*4)
-
 }

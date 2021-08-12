@@ -1,15 +1,14 @@
-package se.umu.cs.guth0028.caloriecompanionapp
+package se.umu.cs.guth0028.caloriecompanionapp.userResources
 
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import se.umu.cs.guth0028.caloriecompanionapp.R
 
 private const val TAG = "WelcomeFragment"
 
@@ -32,8 +31,8 @@ class WelcomeFragment : Fragment() {
 
     private var callbacks: Callbacks? = null
 
-    private val userViewModel: WelcomeViewModel by lazy { //Instantiate a viewmodel object that holds user data
-        ViewModelProvider(this).get(WelcomeViewModel::class.java)
+    private val userViewModel: UserViewModel by lazy { //Instantiate a viewmodel object that holds user data
+        ViewModelProvider(this).get(UserViewModel::class.java)
     }
 
     override fun onAttach(context: Context) {
@@ -80,17 +79,6 @@ class WelcomeFragment : Fragment() {
         activityLevelSpinner.adapter = adapter
 
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        userViewModel.userLiveData.observe( //Actively looks for changes to the foodrepository and updates the UI accordingly
-            viewLifecycleOwner,
-            Observer { user ->
-                user?.let {
-                    this.user = user
-                }
-            })
     }
 
     override fun onStart() {
@@ -169,7 +157,6 @@ class WelcomeFragment : Fragment() {
 
     private fun createUser() {
         this.user.activityLevel = activityLevelSpinner.selectedItem.toString()
-        this.user.accountCreated = true
         userViewModel.addUser(this.user)
 
     }
@@ -181,15 +168,6 @@ class WelcomeFragment : Fragment() {
             return false
         }
         return true
-    }
-
-    fun getIfUserCreated() : Boolean {
-       val accountCreated = userViewModel.getIfUserCreated(this.user.id)
-        Log.d("gustaf", this.user.accountCreated.toString())
-        if (accountCreated.equals(this.user.accountCreated)) {
-            return true
-        }
-        return false
     }
 
     companion object {

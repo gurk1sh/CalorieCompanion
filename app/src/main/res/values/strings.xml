@@ -46,4 +46,7 @@
     <string name="gainWeight">Gain weight</string>
     <string name="next">Next</string>
     <string name="currentCalories">Calories:</string>
+    <string name="eaten">EATEN</string>
+    <string name="kcalLeft">KCAL LEFT</string>
+    <string name="burned">BURNED</string>
 </resources>
