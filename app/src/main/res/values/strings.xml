@@ -49,4 +49,5 @@
     <string name="eaten">EATEN</string>
     <string name="kcalLeft">KCAL LEFT</string>
     <string name="burned">BURNED</string>
+    <string name="clearList">Clear all items</string>
 </resources>

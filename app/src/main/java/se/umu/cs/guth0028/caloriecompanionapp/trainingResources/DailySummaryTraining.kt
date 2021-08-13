@@ -1,0 +1,18 @@
+package se.umu.cs.guth0028.caloriecompanionapp.foodResources
+
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
+import androidx.room.PrimaryKey
+import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.Training
+import java.util.*
+
+@Entity
+class DailySummaryTraining(@PrimaryKey val id: UUID = UUID.randomUUID(), val trainingName: String = "", val length: Float = 0f) {
+}
+
+/*(tableName = "DailySummaryTraining", foreignKeys = [ForeignKey(entity = Training::class,
+    parentColumns = arrayOf("id"),
+    childColumns = arrayOf("id"),
+    onDelete = CASCADE)]
+)*/

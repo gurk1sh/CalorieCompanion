@@ -9,104 +9,106 @@
     android:theme="@style/Theme.calorieCompanionApp">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/dailysumlinearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/calorieLayout"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/breakfastCardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
+                android:id="@+id/calorieLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/breakfastCardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/caloriesEaten"
-                    style="@style/BoldText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:gravity="center|center"
-                    android:text="Placeholder"
-                    app:layout_constraintBottom_toTopOf="@+id/textView8"
-                    app:layout_constraintEnd_toStartOf="@+id/caloriesLeft"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/eaten"
-                    app:layout_constraintEnd_toEndOf="@+id/caloriesEaten"
-                    app:layout_constraintStart_toStartOf="@+id/caloriesEaten"
-                    app:layout_constraintTop_toBottomOf="@+id/caloriesEaten" />
+                    <TextView
+                        android:id="@+id/caloriesEaten"
+                        style="@style/BoldText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:gravity="center|center"
+                        android:text="Placeholder"
+                        app:layout_constraintBottom_toTopOf="@+id/textView8"
+                        app:layout_constraintEnd_toStartOf="@+id/caloriesLeft"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/caloriesLeft"
-                    style="@style/BoldText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:layout_weight="1"
-                    android:gravity="center|center"
-                    android:text="Placeholder"
-                    app:layout_constraintBottom_toTopOf="@+id/textView11"
-                    app:layout_constraintEnd_toStartOf="@+id/caloriesBurned"
-                    app:layout_constraintStart_toEndOf="@+id/caloriesEaten"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/eaten"
+                        app:layout_constraintEnd_toEndOf="@+id/caloriesEaten"
+                        app:layout_constraintStart_toStartOf="@+id/caloriesEaten"
+                        app:layout_constraintTop_toBottomOf="@+id/caloriesEaten" />
 
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/kcalLeft"
-                    app:layout_constraintEnd_toEndOf="@+id/caloriesLeft"
-                    app:layout_constraintStart_toStartOf="@+id/caloriesLeft"
-                    app:layout_constraintTop_toBottomOf="@+id/caloriesLeft" />
+                    <TextView
+                        android:id="@+id/caloriesLeft"
+                        style="@style/BoldText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:layout_weight="1"
+                        android:gravity="center|center"
+                        android:text="Placeholder"
+                        app:layout_constraintBottom_toTopOf="@+id/textView11"
+                        app:layout_constraintEnd_toStartOf="@+id/caloriesBurned"
+                        app:layout_constraintStart_toEndOf="@+id/caloriesEaten"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/caloriesBurned"
-                    style="@style/BoldText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_weight="1"
-                    android:gravity="center|center"
-                    android:text="Placeholder"
-                    app:layout_constraintBottom_toTopOf="@+id/textView12"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/caloriesLeft"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kcalLeft"
+                        app:layout_constraintEnd_toEndOf="@+id/caloriesLeft"
+                        app:layout_constraintStart_toStartOf="@+id/caloriesLeft"
+                        app:layout_constraintTop_toBottomOf="@+id/caloriesLeft" />
 
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/burned"
-                    app:layout_constraintEnd_toEndOf="@+id/caloriesBurned"
-                    app:layout_constraintStart_toStartOf="@+id/caloriesBurned"
-                    app:layout_constraintTop_toBottomOf="@+id/caloriesBurned" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/caloriesBurned"
+                        style="@style/BoldText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_weight="1"
+                        android:gravity="center|center"
+                        android:text="Placeholder"
+                        app:layout_constraintBottom_toTopOf="@+id/textView12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/caloriesLeft"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/burned"
+                        app:layout_constraintEnd_toEndOf="@+id/caloriesBurned"
+                        app:layout_constraintStart_toStartOf="@+id/caloriesBurned"
+                        app:layout_constraintTop_toBottomOf="@+id/caloriesBurned" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/breakfastCardView"
@@ -163,6 +165,7 @@
                                     android:id="@+id/lowerBreakfastTextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:maxWidth="200dp"
                                     android:singleLine="true"
                                     android:text="Placeholder"
                                     android:textColor="@color/lightgrey" />
@@ -259,6 +262,7 @@
                                     android:id="@+id/lowerLunchTextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:maxWidth="200dp"
                                     android:singleLine="true"
                                     android:text="Placeholder"
                                     android:textColor="@color/lightgrey" />
@@ -292,8 +296,7 @@
                         android:id="@+id/lunchRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -355,6 +358,7 @@
                                     android:id="@+id/lowerDinnerTextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:maxWidth="200dp"
                                     android:singleLine="true"
                                     android:text="Placeholder"
                                     android:textColor="@color/lightgrey" />
@@ -388,8 +392,7 @@
                         android:id="@+id/dinnerRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -451,6 +454,7 @@
                                     android:id="@+id/lowerSnackTextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:maxWidth="200dp"
                                     android:singleLine="true"
                                     android:text="Placeholder"
                                     android:textColor="@color/lightgrey" />
@@ -484,8 +488,7 @@
                         android:id="@+id/snackRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -548,6 +551,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:ellipsize="end"
+                                    android:maxWidth="200dp"
                                     android:singleLine="true"
                                     android:text="Placeholder"
                                     android:textColor="@color/lightgrey" />
@@ -581,8 +585,7 @@
                         android:id="@+id/trainingRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -591,5 +594,15 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/clearItemsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clearList"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

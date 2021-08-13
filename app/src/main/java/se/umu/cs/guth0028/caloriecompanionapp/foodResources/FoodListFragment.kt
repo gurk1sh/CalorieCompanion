@@ -1,17 +1,19 @@
 package se.umu.cs.guth0028.caloriecompanionapp.foodResources
 
 import android.content.Context
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
-import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import se.umu.cs.guth0028.caloriecompanionapp.DailySummaryFoodViewModel
 import se.umu.cs.guth0028.caloriecompanionapp.R
 import java.util.*
 
@@ -29,9 +31,15 @@ class FoodListFragment : Fragment() {
 
     private lateinit var foodRecyclerView: RecyclerView //Recyclerview holding the food cardviews
     private var adapter: FoodAdapter? = FoodAdapter(emptyList()) //adapter for recyclerview holding the items
+    private lateinit var rotateAnimation: AnimationDrawable
+    private lateinit var rotateBackAnimation: AnimationDrawable
 
     private val foodListViewModel: FoodListViewModel by lazy {
         ViewModelProvider(this).get(FoodListViewModel::class.java)
+    }
+
+    private val dailySummaryFoodViewModel: DailySummaryFoodViewModel by lazy {
+        ViewModelProvider(this).get(DailySummaryFoodViewModel::class.java)
     }
 
     override fun onAttach(context: Context) {
@@ -42,6 +50,7 @@ class FoodListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
     }
 
     override fun onCreateView(
@@ -112,9 +121,9 @@ class FoodListFragment : Fragment() {
         private val addToDailySummaryButton: ImageButton = itemView.findViewById(R.id.addToDailySummaryButton)
         private lateinit var foodCalorieCalc: FoodCalorieCalculator
         private val rightSlider: ImageView = itemView.findViewById(R.id.rightSlider)
-        private val cardView: CardView = itemView.findViewById(R.id.cardView)
+        private val leftSlider: ImageView = itemView.findViewById(R.id.leftSlider)
 
-        init {
+            init {
             itemView.setOnClickListener(this)
         }
 
@@ -129,12 +138,41 @@ class FoodListFragment : Fragment() {
             calorieTextView.text = getString(R.string.calories, foodCalorieCalc.calories.toString())
 
             val slideRight = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.slide_right)
+            val slideLeft= AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.slide_left)
 
-            addToDailySummaryButton.setOnClickListener {
-                var str: String = foodWeight.text.toString()
-                var float1 : Float = str.toFloat();
-                Log.d("gustaf", "${(float1/100)*foodCalorieCalc.calories }")
-                rightSlider.startAnimation(slideRight)
+            addToDailySummaryButton.apply {
+                val dailySummaryFood = DailySummaryFood()
+                var hasBeenPressed = false
+
+                setOnClickListener {
+
+                    var str: String = foodWeight.text.toString()
+                    var weight : Float = str.toFloat();
+                    dailySummaryFood.foodName = food.name
+                    dailySummaryFood.weight = weight
+                    dailySummaryFood.category = "breakfast"
+
+                    if (!hasBeenPressed) {
+
+                        rightSlider.startAnimation(slideRight)
+                        setImageResource(R.drawable.rotate)
+                        rotateAnimation = addToDailySummaryButton.drawable as AnimationDrawable
+                        rotateAnimation.start()
+
+                        dailySummaryFoodViewModel.addFoodToDS(dailySummaryFood)
+
+                        hasBeenPressed = !hasBeenPressed
+                    } else {
+                        leftSlider.startAnimation(slideLeft)
+                        setImageResource(R.drawable.rotateback)
+                        rotateBackAnimation = addToDailySummaryButton.drawable as AnimationDrawable
+                        rotateBackAnimation.start()
+
+                        dailySummaryFoodViewModel.removeFoodFromDS(dailySummaryFood)
+
+                        hasBeenPressed = !hasBeenPressed
+                    }
+                }
             }
         }
 

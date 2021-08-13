@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -11,8 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import se.umu.cs.guth0028.caloriecompanionapp.DailySummaryFoodViewModel
 import se.umu.cs.guth0028.caloriecompanionapp.R
 import se.umu.cs.guth0028.caloriecompanionapp.userResources.UserViewModel
+import java.lang.StringBuilder
 
 private const val TAG = "DailySummaryFragment"
 
@@ -33,6 +36,11 @@ class DailySummaryFragment : Fragment() {
     private lateinit var snackCardView: CardView
     private lateinit var trainingCardView: CardView
     private lateinit var caloriesLeft: TextView
+    private lateinit var breakfastLowerTextView: TextView
+    private lateinit var lunchLowerTextView: TextView
+    private lateinit var dinnerLowerTextView: TextView
+    private lateinit var snackLowerTextView: TextView
+    private lateinit var clearItemsButton: Button
 
     interface Callbacks {
         fun onAddFoodToDailySummary() //interface used to move the user to the foodlistfragment
@@ -46,6 +54,10 @@ class DailySummaryFragment : Fragment() {
 
     private val userViewModel: UserViewModel by lazy { //Instantiate a viewmodel object that holds user data
         ViewModelProvider(this).get(UserViewModel::class.java)
+    }
+
+    private val dailySummaryFoodViewModel: DailySummaryFoodViewModel by lazy {
+        ViewModelProvider(this).get(DailySummaryFoodViewModel::class.java)
     }
 
     override fun onAttach(context: Context) {
@@ -86,6 +98,12 @@ class DailySummaryFragment : Fragment() {
         snackCardView = view.findViewById(R.id.snackCardView)
         trainingCardView = view.findViewById(R.id.trainingCardView)
         caloriesLeft = view.findViewById(R.id.caloriesLeft)
+        clearItemsButton = view.findViewById(R.id.clearItemsButton)
+
+        breakfastLowerTextView = view.findViewById(R.id.lowerBreakfastTextView)
+        lunchLowerTextView = view.findViewById(R.id.lowerLunchTextView)
+        dinnerLowerTextView = view.findViewById(R.id.lowerDinnerTextView)
+        snackLowerTextView = view.findViewById(R.id.lowerSnackTextView)
 
         breakfastRecyclerView.layoutManager = LinearLayoutManager(context) //Layoutmanager for foodrecyclerview custom layout
         breakfastRecyclerView.adapter = adapter
@@ -117,6 +135,19 @@ class DailySummaryFragment : Fragment() {
                 }
             }
         )
+
+        dailySummaryFoodViewModel.getDailySummaryFoodsWithCategory("breakfast").observe (
+            viewLifecycleOwner,
+            { dailySummaryFood ->
+                dailySummaryFood?.let {
+                val text = StringBuilder()
+                    for (dailySumFood in dailySummaryFood) {
+                        text.append(dailySumFood.foodName)
+                        text.append(", ")
+                    }
+                breakfastLowerTextView.text = text
+            }
+        })
     }
 
     private fun initOnClickListeners() {
@@ -146,6 +177,10 @@ class DailySummaryFragment : Fragment() {
             } else {
                 breakfastRecyclerView.visibility = View.GONE
             }
+        }
+
+        clearItemsButton.setOnClickListener {
+            dailySummaryFoodViewModel.clearDailySummary()
         }
 
     }

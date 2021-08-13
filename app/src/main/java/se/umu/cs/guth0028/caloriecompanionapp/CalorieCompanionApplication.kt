@@ -11,6 +11,7 @@ class CalorieCompanionApplication : Application() {
         FoodRepository.initialize(this)
         TrainingRepository.initialize(this)
         UserRepository.initialize(this)
+        DailySummaryRepository.initialize(this)
     }
 
 }

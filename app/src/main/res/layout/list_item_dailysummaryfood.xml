@@ -45,7 +45,6 @@
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:singleLine="true"
-                        android:text="placeholder"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -70,15 +69,13 @@
                         style="@style/Theme.padding"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Placeholder" />
+                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/food_category"
                         style="@style/Theme.padding"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="placeholder" />
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/food_protein"
@@ -105,14 +102,18 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linearLayout5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:backgroundTint="@color/red"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/outline_clear_white_36dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
