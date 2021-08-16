@@ -7,6 +7,27 @@
     android:layout_height="wrap_content"
     android:theme="@style/Theme.calorieCompanionApp">
 
+    <ImageView
+        android:id="@+id/rightSlider"
+        android:layout_width="1000dp"
+        android:layout_height="0dp"
+        android:background="@color/green"
+        android:elevation="5dp"
+        android:translationZ="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/cardView"
+        app:layout_constraintRight_toLeftOf="@id/cardView"
+        app:layout_constraintTop_toTopOf="@id/cardView" />
+
+    <ImageView
+        android:id="@+id/leftSlider"
+        android:layout_width="1000dp"
+        android:layout_height="0dp"
+        android:background="@color/red"
+        android:elevation="5dp"
+        android:translationZ="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/cardView"
+        app:layout_constraintLeft_toRightOf="@id/cardView"
+        app:layout_constraintTop_toTopOf="@id/cardView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -20,45 +41,91 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/training_name"
-                android:layout_marginStart="5dp"
-                android:textStyle="bold"
-                style="@style/Theme.padding"
+            <LinearLayout
+                android:id="@+id/linearLayout7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="placeholder" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:layout_marginStart="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/training_calories"
-                    style="@style/Theme.padding"
+                    android:id="@+id/training_name"
+                    style="@style/BoldText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="placeholder" />
+                    android:padding="5dp"
+                    android:text="placeholder"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/training_time"
-                    style="@style/Theme.padding"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="placeholder" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/training_calories"
+                        style="@style/Theme.padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="placeholder" />
+
+                    <TextView
+                        android:id="@+id/training_time"
+                        style="@style/Theme.padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trainingTime" />
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/addTrainingToDailySummaryButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_menu_add"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/numPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="1dp"
+                android:autofillHints="100"
+                android:inputType="number"
+                android:maxWidth="48dp"
+                android:text="@string/thirty"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="@+id/addTrainingToDailySummaryButton"
+                app:layout_constraintTop_toBottomOf="@+id/addTrainingToDailySummaryButton" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="@string/minutes"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/numPicker"
+                app:layout_constraintEnd_toEndOf="@+id/addTrainingToDailySummaryButton"
+                app:layout_constraintStart_toEndOf="@+id/numPicker"
+                app:layout_constraintTop_toBottomOf="@+id/addTrainingToDailySummaryButton" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

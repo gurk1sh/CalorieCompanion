@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:id="@+id/calorieLayout"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -32,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
@@ -591,18 +592,21 @@
 
             </androidx.cardview.widget.CardView>
 
+
+            <Button
+                android:id="@+id/clearItemsButton"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/clearList"
+                />
+
         </LinearLayout>
+
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/clearItemsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/clearList"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

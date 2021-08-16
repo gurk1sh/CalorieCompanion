@@ -21,11 +21,13 @@
     <string name="dailySnacks">Snacks</string>
     <string name="dailyTraining">Training</string>
     <string name="calories">|  %1$s kcal</string>
+    <string name="trainingCalories"> %1$s kcal /</string>
     <string name="shortProtein">%1$s P</string>
     <string name="shortFat">%1$s F</string>
     <string name="shortCarbs">%1$s C</string>
     <string name="calPer100">/ 100g</string>
     <string name="oneHundred">100</string>
+    <string name="thirty">30</string>
     <string name="g">g</string>
     <string name="welcomeLabel">Welcome!</string>
     <string name="welcomeText">Before you start using this app, we would like you to fill in some information.</string>
@@ -50,4 +52,6 @@
     <string name="kcalLeft">KCAL LEFT</string>
     <string name="burned">BURNED</string>
     <string name="clearList">Clear all items</string>
+    <string name="trainingTime">%1$s min</string>
+    <string name="minutes">min</string>
 </resources>

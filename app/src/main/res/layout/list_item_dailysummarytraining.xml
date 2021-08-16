@@ -40,7 +40,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/food_name"
+                        android:id="@+id/training_dailysum_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -58,52 +58,25 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/food_calories"
+                        android:id="@+id/training_dailysum_calories"
                         style="@style/Theme.padding"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/calories" />
+                        android:text="@string/trainingCalories" />
 
                     <TextView
-                        android:id="@+id/food_weight"
+                        android:id="@+id/training_dailysum_time"
                         style="@style/Theme.padding"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/food_category"
-                        style="@style/Theme.padding"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/food_protein"
-                        style="@style/Theme.padding"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/shortProtein" />
-
-                    <TextView
-                        android:id="@+id/food_fat"
-                        style="@style/Theme.padding"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/shortFat" />
-
-                    <TextView
-                        android:id="@+id/food_carbohydrates"
-                        style="@style/Theme.padding"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/shortCarbs" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/deleteButton"
+                android:id="@+id/deleteTrainingButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="8dp"

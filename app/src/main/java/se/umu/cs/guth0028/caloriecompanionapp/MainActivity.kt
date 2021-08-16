@@ -52,8 +52,8 @@ private lateinit var user: User
         )
     }
 
-    override fun onFoodSelected(foodId: UUID) {
-       val fragment = FoodFragment.newInstance(foodId)
+    override fun onFoodSelected(foodId: UUID, category: String) {
+       val fragment = FoodFragment.newInstance(foodId, category)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)
@@ -61,8 +61,8 @@ private lateinit var user: User
             .commit()
     }
 
-    override fun onFoodCreated(foodId: UUID) {
-        val fragment = FoodFragment.newInstance(foodId)
+    override fun onFoodCreated(foodId: UUID, category: String) {
+        val fragment = FoodFragment.newInstance(foodId, category)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)
@@ -79,16 +79,16 @@ private lateinit var user: User
             .commit()
     }
 
-    override fun onFoodSavedOrDeleted() {
-        val fragment = FoodListFragment.newInstance()
+    override fun onFoodSavedOrDeleted(category: String) {
+        val fragment = FoodListFragment.newInstance(category)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
     }
 
-    override fun onAddFoodToDailySummary() {
-        val fragment = FoodListFragment.newInstance()
+    override fun onAddFoodToDailySummary(category: String) {
+        val fragment = FoodListFragment.newInstance(category)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)

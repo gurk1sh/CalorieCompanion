@@ -8,7 +8,7 @@ import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.Training
 import java.util.*
 
 @Entity
-class DailySummaryTraining(@PrimaryKey val id: UUID = UUID.randomUUID(), val trainingName: String = "", val length: Float = 0f) {
+class DailySummaryTraining(@PrimaryKey val id: UUID = UUID.randomUUID(), var trainingName: String = "", var length: Int = 0, var caloriesBurned: Float = 0f) {
 }
 
 /*(tableName = "DailySummaryTraining", foreignKeys = [ForeignKey(entity = Training::class,

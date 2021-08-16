@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import se.umu.cs.guth0028.caloriecompanionapp.database.CalorieDatabase
 import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryFood
+import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryTraining
 import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Food
 import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.Training
 import java.util.concurrent.Executors
@@ -27,6 +28,10 @@ class DailySummaryRepository private constructor(context: Context) {
     fun getDailySummaryFoods(): LiveData<List<DailySummaryFood>> = dailySummaryDao.getDailySummaryFoods()
 
     fun getDailySummaryFoodsWithCategory(category: String): LiveData<List<DailySummaryFood>> = dailySummaryDao.getDailySummaryWithCategory(category)
+
+    fun getFoodsAssociatedWithDS(category: String): LiveData<List<Food>> = dailySummaryDao.getFoodsAssociatedWithDS(category)
+
+    fun getFoodWeightAssociatedWithDS(name: String): LiveData<Float> = dailySummaryDao.getFoodWeightAssociatedWithDS(name)
 
     fun addDailySummaryFood(dailySummaryFood: DailySummaryFood) {
         executor.execute {
@@ -53,25 +58,21 @@ class DailySummaryRepository private constructor(context: Context) {
         }
     }
 
-    fun getDailySummaryTraining() {
-        executor.execute {
-            dailySummaryDao.getDailySummaryTraining()
-        }
-    }
+    fun getDailySummaryTraining(): LiveData<List<DailySummaryTraining>> = dailySummaryDao.getDailySummaryTraining()
 
-    fun addDailySummaryTraining(training: Training) {
+    fun addDailySummaryTraining(training: DailySummaryTraining) {
         executor.execute {
             dailySummaryDao.addDailySummaryTraining(training)
         }
     }
 
-    fun updateDailySummaryTraining(training: Training) {
+    fun updateDailySummaryTraining(training: DailySummaryTraining) {
         executor.execute {
             dailySummaryDao.updateDailySummaryTraining(training)
         }
     }
 
-    fun removeDailySummaryTraining(training: Training) {
+    fun removeDailySummaryTraining(training: DailySummaryTraining) {
         executor.execute {
             dailySummaryDao.removeDailySummaryTraining(training)
         }

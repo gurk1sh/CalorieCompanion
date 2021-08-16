@@ -1,16 +1,23 @@
 package se.umu.cs.guth0028.caloriecompanionapp.trainingResources
 
 import android.content.Context
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.animation.AnimationUtils
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import se.umu.cs.guth0028.caloriecompanionapp.DailySummaryTrainingViewModel
 import se.umu.cs.guth0028.caloriecompanionapp.R
-import java.util.*
+import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryFood
+import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryTraining
 
 private const val TAG = "TrainingListFragment"
 
@@ -23,11 +30,17 @@ class TrainingListFragment : Fragment() {
 
     private var callbacks: Callbacks? = null
 
+    private lateinit var rotateAnimation: AnimationDrawable
+    private lateinit var rotateBackAnimation: AnimationDrawable
     private lateinit var trainingRecyclerView: RecyclerView
     private var adapter: TrainingAdapter? = TrainingAdapter(emptyList())
 
     private val trainingListViewModel: TrainingListViewModel by lazy {
         ViewModelProvider(this).get(TrainingListViewModel::class.java)
+    }
+
+    private val dailySummaryTrainingViewModel: DailySummaryTrainingViewModel by lazy {
+        ViewModelProvider(this).get(DailySummaryTrainingViewModel::class.java)
     }
 
     override fun onAttach(context: Context) {
@@ -83,8 +96,12 @@ class TrainingListFragment : Fragment() {
         private lateinit var training: Training
 
         private val nameTextView: TextView = itemView.findViewById(R.id.training_name)
-        private val proteinTextView: TextView = itemView.findViewById(R.id.training_calories)
-        private val fatTextView: TextView = itemView.findViewById(R.id.training_time)
+        private val calorieTextView: TextView = itemView.findViewById(R.id.training_calories)
+        private val timeTextView: TextView = itemView.findViewById(R.id.training_time)
+        private val addTrainingToDailySummaryButton: ImageButton = itemView.findViewById(R.id.addTrainingToDailySummaryButton)
+        private val rightSlider: ImageView = itemView.findViewById(R.id.rightSlider)
+        private val leftSlider: ImageView = itemView.findViewById(R.id.leftSlider)
+        private val trainingTime: EditText = itemView.findViewById(R.id.numPicker)
 
         init {
             itemView.setOnClickListener(this)
@@ -93,9 +110,48 @@ class TrainingListFragment : Fragment() {
         fun bind(training: Training) { //set the text for the textviews
             this.training = training
             nameTextView.text = this.training.name
-            proteinTextView.text = this.training.caloriesBurned.toString()
-            fatTextView.text = this.training.time.toString()
+            calorieTextView.text = getString(R.string.trainingCalories, this.training.caloriesBurned.toString())
+            timeTextView.text = getString(R.string.trainingTime, this.training.time.toString())
+
+            val slideRight = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.slide_right)
+            val slideLeft = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.slide_left)
+
+            addTrainingToDailySummaryButton.apply {
+                val addTraining = DailySummaryTraining()
+                var hasBeenPressed = false
+
+                setOnClickListener {
+
+                    addTraining.trainingName = training.name
+                    addTraining.length = trainingTime.text.toString().toInt()
+                    val tempCalories = training.caloriesBurned * (addTraining.length.toFloat()/30)
+                    addTraining.caloriesBurned = tempCalories
+
+                    if (!hasBeenPressed) {
+
+                        rightSlider.startAnimation(slideRight)
+                        setImageResource(R.drawable.rotate)
+                        rotateAnimation = addTrainingToDailySummaryButton.drawable as AnimationDrawable
+                        rotateAnimation.start()
+
+                        dailySummaryTrainingViewModel.addTrainingToDS(addTraining)
+
+                        hasBeenPressed = !hasBeenPressed
+                    } else {
+                        leftSlider.startAnimation(slideLeft)
+                        setImageResource(R.drawable.rotateback)
+                        rotateBackAnimation = addTrainingToDailySummaryButton.drawable as AnimationDrawable
+                        rotateBackAnimation.start()
+
+                        dailySummaryTrainingViewModel.removeTrainingFromDS(addTraining)
+
+                        hasBeenPressed = !hasBeenPressed
+                    }
+                }
+            }
         }
+
+
 
         override fun onClick(v: View?) {
             callbacks?.onTrainingSelected()

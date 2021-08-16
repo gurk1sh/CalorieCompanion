@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,13 +19,14 @@ import se.umu.cs.guth0028.caloriecompanionapp.R
 import java.util.*
 
 private const val TAG = "FoodListFragment"
+private const val ARG_CATEGORY = "category"
 
 class FoodListFragment : Fragment() {
 
     interface Callbacks {
-        fun onFoodSelected(foodId: UUID) //interface used to move the user to the foodDetailFragment
+        fun onFoodSelected(foodId: UUID, category: String) //interface used to move the user to the foodDetailFragment
 
-        fun onFoodCreated(foodId: UUID)
+        fun onFoodCreated(foodId: UUID, category: String)
     }
 
     private var callbacks: Callbacks? = null
@@ -33,6 +35,8 @@ class FoodListFragment : Fragment() {
     private var adapter: FoodAdapter? = FoodAdapter(emptyList()) //adapter for recyclerview holding the items
     private lateinit var rotateAnimation: AnimationDrawable
     private lateinit var rotateBackAnimation: AnimationDrawable
+    private lateinit var foodType: TextView
+    private var category: String = ""
 
     private val foodListViewModel: FoodListViewModel by lazy {
         ViewModelProvider(this).get(FoodListViewModel::class.java)
@@ -50,7 +54,6 @@ class FoodListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onCreateView(
@@ -62,6 +65,10 @@ class FoodListFragment : Fragment() {
         foodRecyclerView = view.findViewById(R.id.food_recycler_view) as RecyclerView
         foodRecyclerView.layoutManager = LinearLayoutManager(context) //Layoutmanager for foodrecyclerview custom layout
         foodRecyclerView.adapter = adapter
+        foodType = view.findViewById(R.id.food_type)
+
+        category = arguments?.getSerializable(ARG_CATEGORY) as String
+        foodType.text = category
         return view
     }
 
@@ -80,6 +87,10 @@ class FoodListFragment : Fragment() {
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     override fun onDetach() {
         super.onDetach()
         callbacks = null //Null the callbacks because we cannot access the activity or count on it to exist
@@ -94,7 +105,7 @@ class FoodListFragment : Fragment() {
         return when (item.itemId) {
             R.id.new_food -> {
                 val food = Food()
-                callbacks?.onFoodCreated(food.id)
+                callbacks?.onFoodCreated(food.id, this.category)
                 true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -150,7 +161,7 @@ class FoodListFragment : Fragment() {
                     var weight : Float = str.toFloat();
                     dailySummaryFood.foodName = food.name
                     dailySummaryFood.weight = weight
-                    dailySummaryFood.category = "breakfast"
+                    dailySummaryFood.category = category
 
                     if (!hasBeenPressed) {
 
@@ -177,7 +188,7 @@ class FoodListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) { //Start new fragment when clicking a list item
-            callbacks?.onFoodSelected(food.id)
+            callbacks?.onFoodSelected(food.id, category)
         }
     }
 
@@ -199,8 +210,13 @@ class FoodListFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): FoodListFragment {
-            return FoodListFragment()
+        fun newInstance(category: String): FoodListFragment {
+            val args = Bundle().apply {
+                putSerializable(ARG_CATEGORY, category)
+            }
+            return FoodListFragment().apply {
+                arguments = args
+            }
         }
     }
 }

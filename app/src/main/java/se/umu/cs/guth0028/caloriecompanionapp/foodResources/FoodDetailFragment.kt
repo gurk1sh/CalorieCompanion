@@ -25,6 +25,7 @@ import java.io.File
 import java.util.*
 
 private const val ARG_FOOD_ID = "food_id"
+private const val ARG_CATEGORY = "category"
 
 class FoodFragment : Fragment() {
     private lateinit var food: Food
@@ -39,9 +40,10 @@ class FoodFragment : Fragment() {
     private lateinit var photoButton: ImageButton
     private lateinit var photoView: ImageView
     private lateinit var deleteButton: Button
+    private lateinit var food_list: ArrayList<Food>
 
     interface Callbacks {
-        fun onFoodSavedOrDeleted() //interface used to move the user to the foodlistfragment when they either remove or save a new food
+        fun onFoodSavedOrDeleted(category: String) //interface used to move the user to the foodlistfragment when they either remove or save a new food
     }
 
     private var callbacks: Callbacks? = null
@@ -128,17 +130,17 @@ class FoodFragment : Fragment() {
                 val currentFood = foodDetailViewModel.foodLiveData.value?.name
                 if (currentFood == foodName.text.toString()) {
                     foodDetailViewModel.updateFood(food)
-                    callbacks?.onFoodSavedOrDeleted()
+                    callbacks?.onFoodSavedOrDeleted(arguments?.getSerializable(ARG_CATEGORY) as String)
                 } else {
                     foodDetailViewModel.addFood(food)
-                    callbacks?.onFoodSavedOrDeleted()
+                    callbacks?.onFoodSavedOrDeleted(arguments?.getSerializable(ARG_CATEGORY) as String)
                 }
             }
         }
 
         deleteButton.setOnClickListener { //removes food from database after usage of the delete button, also moves user back to food list view
             foodDetailViewModel.removeFood(food)
-            callbacks?.onFoodSavedOrDeleted()
+            callbacks?.onFoodSavedOrDeleted(arguments?.getSerializable(ARG_CATEGORY) as String)
         }
 
         photoButton.apply { //Opens the camera activity if uri permission has been given
@@ -238,9 +240,10 @@ class FoodFragment : Fragment() {
     }
 
     companion object { //Is used to create a new instance of FoodFragment which requires a foodId to be used so it knows what to display (name, protein, fat etc)
-        fun newInstance(foodId: UUID): FoodFragment {
+        fun newInstance(foodId: UUID, category: String): FoodFragment {
             val args = Bundle().apply {
                 putSerializable(ARG_FOOD_ID, foodId)
+                putSerializable(ARG_CATEGORY, category)
             }
             return FoodFragment().apply {
                 arguments = args

@@ -1,6 +1,7 @@
 package se.umu.cs.guth0028.caloriecompanionapp
 
 import androidx.lifecycle.ViewModel
+import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryTraining
 import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.Training
 
 class DailySummaryTrainingViewModel : ViewModel() {
@@ -17,15 +18,15 @@ class DailySummaryTrainingViewModel : ViewModel() {
     * TRAINING METHODS
     * */
 
-    fun addTrainingToDS(training: Training) {
+    fun addTrainingToDS(training: DailySummaryTraining) {
         dailySummaryRepository.addDailySummaryTraining(training)
     }
 
-    fun updateTrainingInDS(training: Training) {
+    fun updateTrainingInDS(training: DailySummaryTraining) {
         dailySummaryRepository.updateDailySummaryTraining(training)
     }
 
-    fun removeTrainingFromDS(training: Training) {
+    fun removeTrainingFromDS(training: DailySummaryTraining) {
         dailySummaryRepository.removeDailySummaryTraining(training)
     }
 

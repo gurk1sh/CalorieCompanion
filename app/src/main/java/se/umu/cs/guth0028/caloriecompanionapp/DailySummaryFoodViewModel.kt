@@ -11,7 +11,6 @@ class DailySummaryFoodViewModel : ViewModel() {
     val allDailySummaryFoods = dailySummaryRepository.getDailySummaryFoods()
     val allDailySummaryTraining = dailySummaryRepository.getDailySummaryTraining()
 
-
     fun clearDailySummary() {
         dailySummaryRepository.clearDailySummary()
     }
@@ -34,5 +33,13 @@ class DailySummaryFoodViewModel : ViewModel() {
 
     fun getDailySummaryFoodsWithCategory(category: String) : LiveData<List<DailySummaryFood>> {
         return dailySummaryRepository.getDailySummaryFoodsWithCategory(category)
+    }
+
+    fun getFoodsAssociatedWithDS(category: String) : LiveData<List<Food>> {
+        return dailySummaryRepository.getFoodsAssociatedWithDS(category)
+    }
+
+    fun getFoodWeightAssociatedWithDS(name: String) : LiveData<Float> {
+        return dailySummaryRepository.getFoodWeightAssociatedWithDS(name)
     }
 }
