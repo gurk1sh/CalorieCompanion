@@ -3,14 +3,19 @@ Calorie counting app for Android devices. Made in Android Studio using Kotlin.
 
 Register your meals and workouts! Calorie Companion is here to help you achieve your weight goals through better eating habits. 
 
-Icon
+**Icon**
+
 ![CalorieCompanion](https://user-images.githubusercontent.com/28981311/130754750-6ff9c348-8eeb-45aa-8926-e01c9970c118.jpg)
 
-General app structure
+**App structure**
+
 ![image](https://user-images.githubusercontent.com/28981311/130755140-aebd164f-af06-48fe-9608-9433359ff20a.png)
 
-Navigation
+**Navigation**
+
 ![image](https://user-images.githubusercontent.com/28981311/130755296-0f56a8d3-aadb-45cf-b6c9-73c7bb48978e.png)
+
+**Screen views**
 
 ![image](https://user-images.githubusercontent.com/28981311/130753228-363b6a0c-9824-4cf6-8032-1f0a14854825.png)
 ![image](https://user-images.githubusercontent.com/28981311/130753351-05fcc200-1113-4514-b304-0cc0e2daf6a0.png)
