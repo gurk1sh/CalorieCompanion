@@ -2,10 +2,9 @@ package se.umu.cs.guth0028.caloriecompanionapp.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryFood
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryTraining
+import se.umu.cs.guth0028.caloriecompanionapp.dailySummaryResources.DailySummaryFood
+import se.umu.cs.guth0028.caloriecompanionapp.dailySummaryResources.DailySummaryTraining
 import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Food
-import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.Training
 
 @Dao
 interface DailySummaryItemsDao { //Data access object that fetches food data from DB with specific queries
@@ -30,11 +29,6 @@ interface DailySummaryItemsDao { //Data access object that fetches food data fro
     @Query("DELETE FROM dailysummaryfood")
     fun clearAllDailySummaryFood()
 
-    @Query("SELECT food.id, name, food.category, protein, fat, carbohydrates FROM food,dailysummaryfood WHERE name=foodName AND dailysummaryfood.category=(:category)")
-    fun getFoodsAssociatedWithDS(category: String): LiveData<List<Food>>
-
-    @Query("SELECT dailysummaryfood.weight from dailysummaryfood,food WHERE foodname=(:name) AND foodName=name")
-    fun getFoodWeightAssociatedWithDS(name: String): LiveData<Float>
     //Training methods
 
     @Query("DELETE FROM dailysummarytraining")

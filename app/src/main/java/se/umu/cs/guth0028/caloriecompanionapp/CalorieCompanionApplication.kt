@@ -1,6 +1,7 @@
 package se.umu.cs.guth0028.caloriecompanionapp
 
 import android.app.Application
+import se.umu.cs.guth0028.caloriecompanionapp.dailySummaryResources.DailySummaryRepository
 import se.umu.cs.guth0028.caloriecompanionapp.foodResources.FoodRepository
 import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.TrainingRepository
 import se.umu.cs.guth0028.caloriecompanionapp.userResources.UserRepository

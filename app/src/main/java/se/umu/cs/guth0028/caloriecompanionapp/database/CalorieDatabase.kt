@@ -3,8 +3,8 @@ package se.umu.cs.guth0028.caloriecompanionapp.database
 import androidx.room.*
 import se.umu.cs.guth0028.caloriecompanionapp.userResources.User
 import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Category
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryFood
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryTraining
+import se.umu.cs.guth0028.caloriecompanionapp.dailySummaryResources.DailySummaryFood
+import se.umu.cs.guth0028.caloriecompanionapp.dailySummaryResources.DailySummaryTraining
 import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Food
 import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.Training
 

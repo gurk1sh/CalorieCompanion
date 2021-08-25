@@ -12,6 +12,7 @@ class FoodDetailViewModel : ViewModel() { //Viewmodel holding food objects to av
 
     private val foodRepository = FoodRepository.get()
     private val foodIdLiveData = MutableLiveData<UUID>()
+    val allFoods = foodRepository.getFoods()
 
     var foodLiveData: LiveData<Food?> =
         Transformations.switchMap(foodIdLiveData) { foodId ->

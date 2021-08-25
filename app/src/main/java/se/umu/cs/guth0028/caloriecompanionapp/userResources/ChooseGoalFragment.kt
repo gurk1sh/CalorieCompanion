@@ -12,6 +12,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import se.umu.cs.guth0028.caloriecompanionapp.R
 
 class ChooseGoalFragment : Fragment() {
@@ -22,13 +23,6 @@ class ChooseGoalFragment : Fragment() {
     private lateinit var maintainWeightButton: RadioButton
     private lateinit var gainWeightButton: RadioButton
     private lateinit var userCalorieTextView: TextView
-
-
-    interface Callbacks {
-        fun onMoveToDailySummary() //interface used to move the user to the foodlistfragment
-    }
-
-    private var callbacks: Callbacks? = null
 
     private var calories: Float = 0f
 
@@ -41,16 +35,6 @@ class ChooseGoalFragment : Fragment() {
         user = User()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callbacks = context as Callbacks? //Stash the activity instance hosting the fragment
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null //Null the callbacks because we cannot access the activity or count on it to exist
-    }
-
     override fun onStart() {
         super.onStart()
         initOnClickListeners()
@@ -58,30 +42,34 @@ class ChooseGoalFragment : Fragment() {
 
     private fun initOnClickListeners() {
 
-        letsGoButton.setOnClickListener {
+        letsGoButton.setOnClickListener { //Set user goal, calories and move to daily summary fragment if a goal has been selected
             if (checkForRadioButton(radioGroup)) {
                 userViewModel.updateUserGoal(user)
                 userViewModel.updateUserCalories(user)
-                callbacks?.onMoveToDailySummary()
+                view?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.dailySummaryFragment) }
             }
         }
+
+        /*
+        * Update user calories based on their goal, this app assumes you want to gain or lose weight by approx 3,5kg per week
+        */
 
         loseWeightButton.setOnClickListener {
             this.user.goal = loseWeightButton.text.toString()
             this.user.calories = this.calories - 500f
-            userCalorieTextView.text = this.user.calories.toString()
+            userCalorieTextView.text = this.user.calories.toInt().toString()
         }
 
         maintainWeightButton.setOnClickListener {
             this.user.goal = maintainWeightButton.text.toString()
             this.user.calories = this.calories
-            userCalorieTextView.text = this.user.calories.toString()
+            userCalorieTextView.text = this.user.calories.toInt().toString()
         }
 
         gainWeightButton.setOnClickListener {
             this.user.goal = gainWeightButton.text.toString()
             this.user.calories = this.calories + 500f
-            userCalorieTextView.text = this.user.calories.toString()
+            userCalorieTextView.text = this.user.calories.toInt().toString()
         }
     }
 
@@ -101,20 +89,30 @@ class ChooseGoalFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //Listen to trainingListViewModel which updates the training in the traininglistfragment every time the view is created
+        /*
+        * Get a list of users and set the current user to the first entry in list. There should never be two users in the list.
+        */
         super.onViewCreated(view, savedInstanceState)
 
         userViewModel.userLiveData.observe(
             viewLifecycleOwner,
             { user ->
                 user?.let {
-                    Log.i("gustaf", "Got users ${user.size}")
-                    Log.i("gustaf", user[0]!!.name)
                     this.user = user[0]!!
                     this.calories = PersonCalorieCalculator.newInstance(this.user)
                 }
             }
         )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (user.calories == 0f) {
+            user.calories = this.calories
+        }
+
+        userViewModel.updateUserGoal(user)
+        userViewModel.updateUserCalories(user)
     }
 
     private fun checkForRadioButton(radioGroup: RadioGroup) : Boolean {
@@ -126,11 +124,4 @@ class ChooseGoalFragment : Fragment() {
         }
         return true
     }
-
-    companion object {
-        fun newInstance(): ChooseGoalFragment {
-            return ChooseGoalFragment()
-        }
-    }
-
 }

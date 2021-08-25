@@ -54,4 +54,6 @@
     <string name="clearList">Clear all items</string>
     <string name="trainingTime">%1$s min</string>
     <string name="minutes">min</string>
+    <string name="home">Home</string>
+    <string name="info">This image is, and will only be used in this application</string>
 </resources>

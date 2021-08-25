@@ -17,6 +17,9 @@ interface UserDao { //Data access object that fetches training data from DB with
     @Insert
     fun addUser(user: User)
 
+    @Update
+    fun updateUser(user: User)
+
     @Query("UPDATE user SET goal=(:goal)")
     fun updateUserGoal(goal: String)
 

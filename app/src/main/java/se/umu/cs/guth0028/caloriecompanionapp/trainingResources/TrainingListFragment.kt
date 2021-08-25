@@ -10,25 +10,21 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import se.umu.cs.guth0028.caloriecompanionapp.DailySummaryTrainingViewModel
+import se.umu.cs.guth0028.caloriecompanionapp.dailySummaryResources.DailySummaryTrainingViewModel
 import se.umu.cs.guth0028.caloriecompanionapp.R
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryFood
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryTraining
+import se.umu.cs.guth0028.caloriecompanionapp.dailySummaryResources.DailySummaryTraining
+import se.umu.cs.guth0028.caloriecompanionapp.foodResources.Food
 
 private const val TAG = "TrainingListFragment"
 
 
 class TrainingListFragment : Fragment() {
-
-    interface Callbacks {
-        fun onTrainingSelected()
-    }
-
-    private var callbacks: Callbacks? = null
 
     private lateinit var rotateAnimation: AnimationDrawable
     private lateinit var rotateBackAnimation: AnimationDrawable
@@ -43,11 +39,6 @@ class TrainingListFragment : Fragment() {
         ViewModelProvider(this).get(DailySummaryTrainingViewModel::class.java)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callbacks = context as Callbacks? //Stash the activity instance hosting the fragment
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -59,7 +50,6 @@ class TrainingListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_training_list, container, false)
-        //inflate training list fragment view inside of the fragment container used in activity_main.xml
         trainingRecyclerView = view.findViewById(R.id.training_recycler_view) as RecyclerView
         trainingRecyclerView.layoutManager = LinearLayoutManager(context) //Layoutmanager for foodrecyclerview custom layout
         trainingRecyclerView.adapter = adapter
@@ -81,9 +71,19 @@ class TrainingListFragment : Fragment() {
         )
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null //Null the callbacks because we cannot access the activity or count on it to exist
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_training_list, menu) //inflate food list menu inside of the menu
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { //Move the user to the food detail view for adding a new food when they press the plus icon in the menu
+        return when (item.itemId) {
+            R.id.home -> {
+                view?.let { Navigation.findNavController(it).navigate(R.id.action_trainingListFragment_to_dailySummaryFragment) }
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     private fun updateUI(training: List<Training>) { //update the adapter consisting of training items then update the recyclerview itself
@@ -127,7 +127,7 @@ class TrainingListFragment : Fragment() {
                     val tempCalories = training.caloriesBurned * (addTraining.length.toFloat()/30)
                     addTraining.caloriesBurned = tempCalories
 
-                    if (!hasBeenPressed) {
+                    if (!hasBeenPressed) { //Play sliding animation and change icon drawable
 
                         rightSlider.startAnimation(slideRight)
                         setImageResource(R.drawable.rotate)
@@ -151,10 +151,8 @@ class TrainingListFragment : Fragment() {
             }
         }
 
-
-
         override fun onClick(v: View?) {
-            callbacks?.onTrainingSelected()
+
         }
     }
 
@@ -172,12 +170,6 @@ class TrainingListFragment : Fragment() {
 
         override fun getItemCount(): Int {
             return training.size
-        }
-    }
-
-    companion object {
-        fun newInstance(): TrainingListFragment {
-            return TrainingListFragment()
         }
     }
 }

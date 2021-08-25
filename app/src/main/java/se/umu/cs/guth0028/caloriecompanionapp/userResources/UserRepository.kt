@@ -20,8 +20,6 @@ class UserRepository private constructor(context: Context) {
     private val userDao = database.userDao()
     private val executor = Executors.newSingleThreadExecutor() //Executor instance running work from main thread, should be running from separate if bigger database
 
-    fun getUser(uuid: UUID?): LiveData<User?> = userDao.getUser(uuid)
-
     fun getUserWithoutID(): LiveData<List<User?>> = userDao.getUserWithoutID()
 
     fun updateUserGoal(user: User) {
@@ -38,8 +36,13 @@ class UserRepository private constructor(context: Context) {
 
     fun addUser(user: User) {
         executor.execute {
-            //userDao.addUser(user.id,user.name,user.age,user.gender,user.weight,user.length,user.activityLevel, user.accountCreated)
             userDao.addUser(user)
+        }
+    }
+
+    fun updateUser(user: User) {
+        executor.execute {
+            userDao.updateUser(user)
         }
     }
 

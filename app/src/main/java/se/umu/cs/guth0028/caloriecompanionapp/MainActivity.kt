@@ -1,20 +1,14 @@
 package se.umu.cs.guth0028.caloriecompanionapp
 
 import android.os.Bundle
-import android.util.Log
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.DailySummaryFragment
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.FoodFragment
-import se.umu.cs.guth0028.caloriecompanionapp.foodResources.FoodListFragment
-import se.umu.cs.guth0028.caloriecompanionapp.trainingResources.TrainingListFragment
-import se.umu.cs.guth0028.caloriecompanionapp.userResources.ChooseGoalFragment
+import androidx.navigation.fragment.findNavController
 import se.umu.cs.guth0028.caloriecompanionapp.userResources.User
 import se.umu.cs.guth0028.caloriecompanionapp.userResources.UserViewModel
-import se.umu.cs.guth0028.caloriecompanionapp.userResources.WelcomeFragment
-import java.util.UUID
 
-class MainActivity : AppCompatActivity(), FoodListFragment.Callbacks, FoodFragment.Callbacks, TrainingListFragment.Callbacks, DailySummaryFragment.Callbacks, WelcomeFragment.Callbacks, ChooseGoalFragment.Callbacks {
+class MainActivity : AppCompatActivity() {
 private lateinit var user: User
 
     private val userViewModel: UserViewModel by lazy { //Instantiate a viewmodel object that holds user data
@@ -26,97 +20,26 @@ private lateinit var user: User
         setContentView(R.layout.activity_main)
         user = User()
 
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) //get the navigation host fragment holding the current fragment
+        val inflater = navHostFragment?.findNavController()?.navInflater //get the navigation host fragment inflater
+        val graph = inflater?.inflate(R.navigation.nav_graph) //get the navigation graph
 
-        userViewModel.userIdLiveData.observe(
+        userViewModel.userIdLiveData.observe( //Fetches a list of users
             this,
             { user ->
                 user?.let {
-                    Log.i("gustaf", "Got users ${user.size}")
-                    if (user.isEmpty() && currentFragment == null) { //Check for already existing user, start welcomefragment if not
-                        val welcomeFragment = WelcomeFragment.newInstance()
-                        supportFragmentManager
-                            .beginTransaction()
-                            .add(R.id.fragment_container, welcomeFragment)
-                            .commit()
+                    if (user.isEmpty()) { //Check for any already existing user in the list, start welcomefragment if not
+                        graph?.setStartDestination(R.id.welcomeFragment)
                     } else {
-                        val fragment = DailySummaryFragment.newInstance()
-                        supportFragmentManager
-                            .beginTransaction()
-                            .add(R.id.fragment_container, fragment)
-                            .commit()
+                        graph?.setStartDestination(R.id.dailySummaryFragment)
                     }
-                    userViewModel.userIdLiveData.removeObservers(this)
+                    val navController = navHostFragment?.findNavController()
+                    if (graph != null && savedInstanceState == null) {
+                        navController?.setGraph(graph, intent.extras) //update the navigation graph with the new start destination
+                    }
+                    userViewModel.userIdLiveData.removeObservers(this) //unregister this observer to avoid this activity randomly changing the current fragment
                 }
             }
         )
     }
-
-    override fun onFoodSelected(foodId: UUID, category: String) {
-       val fragment = FoodFragment.newInstance(foodId, category)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    override fun onFoodCreated(foodId: UUID, category: String) {
-        val fragment = FoodFragment.newInstance(foodId, category)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    override fun onTrainingSelected() {
-        val fragment = TrainingListFragment.newInstance()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    override fun onFoodSavedOrDeleted(category: String) {
-        val fragment = FoodListFragment.newInstance(category)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
-    }
-
-    override fun onAddFoodToDailySummary(category: String) {
-        val fragment = FoodListFragment.newInstance(category)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
-    }
-
-    override fun onAddTrainingToDailySummary() {
-        val fragment = TrainingListFragment.newInstance()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
-    }
-
-    override fun onMoveToChooseGoal() {
-        val fragment = ChooseGoalFragment.newInstance()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
-    }
-
-    override fun onMoveToDailySummary() {
-        val fragment = DailySummaryFragment.newInstance()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
-    }
-
 }

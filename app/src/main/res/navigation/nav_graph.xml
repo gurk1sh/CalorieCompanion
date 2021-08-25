@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/dailySummaryFragment"
+        tools:layout="@layout/fragment_daily_summary"
+        android:name="se.umu.cs.guth0028.caloriecompanionapp.dailySummaryResources.DailySummaryFragment"
+        android:label="DailySummaryFragment" >
+        <action
+            android:id="@+id/action_dailySummaryFragment_to_foodListFragment"
+            app:destination="@id/foodListFragment" />
+        <action
+            android:id="@+id/action_dailySummaryFragment_to_trainingListFragment"
+            app:destination="@id/trainingListFragment" />
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/list_item_food"
+        android:id="@+id/foodListFragment"
+        android:name="se.umu.cs.guth0028.caloriecompanionapp.foodResources.FoodListFragment"
+        android:label="FoodListFragment" >
+        <action
+            android:id="@+id/action_foodListFragment_to_foodFragment"
+            app:destination="@id/foodFragment" />
+        <action
+            android:id="@+id/action_foodListFragment_to_dailySummaryFragment"
+            app:destination="@id/dailySummaryFragment" />
+        <argument
+            android:name="foodID"
+            app:argType="java.util.UUID" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/list_item_training"
+        android:id="@+id/trainingListFragment"
+        android:name="se.umu.cs.guth0028.caloriecompanionapp.trainingResources.TrainingListFragment"
+        android:label="TrainingListFragment" >
+        <action
+            android:id="@+id/action_trainingListFragment_to_dailySummaryFragment"
+            app:destination="@id/dailySummaryFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_food_detailed"
+        android:id="@+id/foodFragment"
+        android:name="se.umu.cs.guth0028.caloriecompanionapp.foodResources.FoodFragment"
+        android:label="FoodFragment" >
+        <action
+            android:id="@+id/action_foodFragment_to_foodListFragment"
+            app:destination="@id/foodListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        tools:layout="@layout/fragment_welcome_user"
+        android:name="se.umu.cs.guth0028.caloriecompanionapp.userResources.WelcomeFragment"
+        android:label="WelcomeFragment" >
+        <action
+            android:id="@+id/action_welcomeFragment2_to_chooseGoalFragment2"
+            app:destination="@id/chooseGoalFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_select_goal"
+        android:id="@+id/chooseGoalFragment"
+        android:name="se.umu.cs.guth0028.caloriecompanionapp.userResources.ChooseGoalFragment"
+        android:label="ChooseGoalFragment" >
+        <action
+            android:id="@+id/action_chooseGoalFragment2_to_welcomeFragment2"
+            app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_chooseGoalFragment2_to_dailySummaryFragment"
+            app:destination="@id/dailySummaryFragment" />
+    </fragment>
+</navigation>

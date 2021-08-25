@@ -4,10 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import se.umu.cs.guth0028.caloriecompanionapp.R
 
 private const val TAG = "WelcomeFragment"
@@ -25,30 +28,25 @@ class WelcomeFragment : Fragment() {
     private lateinit var activityLevelSpinner: Spinner
     private lateinit var user: User
 
-    interface Callbacks {
-        fun onMoveToChooseGoal() //interface used to move the user to the foodlistfragment
-    }
-
-    private var callbacks: Callbacks? = null
+    private var existingUser: Boolean = false
 
     private val userViewModel: UserViewModel by lazy { //Instantiate a viewmodel object that holds user data
         ViewModelProvider(this).get(UserViewModel::class.java)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callbacks = context as Callbacks? //Stash the activity instance hosting the fragment
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null //Null the callbacks because we cannot access the activity or count on it to exist
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         user = User()
 
+        if (savedInstanceState != null) {
+            user = savedInstanceState.getParcelable("user")!!
+        }
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("user", this.user)
     }
 
     override fun onCreateView(
@@ -72,7 +70,7 @@ class WelcomeFragment : Fragment() {
             R.layout.spinner_row
         )
 
-        for (activityLevel in ActivityLevel.newInstance()) {
+        for (activityLevel in ActivityLevel.newInstance()) { //Load existing activitylevels from activitylevel class and add them to the spinner
             adapter.add(activityLevel)
         }
 
@@ -88,10 +86,12 @@ class WelcomeFragment : Fragment() {
         addTextChangedListeners(lengthText)
         addTextChangedListeners(weightText)
         initOnClickListeners()
+
+
     }
 
     private fun initOnClickListeners() {
-        createUserButton.setOnClickListener {
+        createUserButton.setOnClickListener { //Checks if all textfields and radiogroup has been assigned a value
             var textIsNotEmpty = checkForText(firstAndLastNameText)
             textIsNotEmpty = checkForText(ageText)
             textIsNotEmpty = checkForText(weightText)
@@ -100,7 +100,7 @@ class WelcomeFragment : Fragment() {
 
             if (textIsNotEmpty && checkedRadioButton) {
                 createUser()
-                callbacks?.onMoveToChooseGoal()
+                view?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.chooseGoalFragment) } //Moves user to the choose goal fragment through navigation graph
             }
         }
 
@@ -113,10 +113,22 @@ class WelcomeFragment : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        userViewModel.userIdLiveData.observe( //Checks for existing user in database
+            viewLifecycleOwner,
+            { user ->
+                if (user.isNotEmpty()) {
+                    existingUser = true
+                }
+            }
+        )
+    }
+
     private fun addTextChangedListeners(editText: EditText) {
         val nameWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // This space intentionally left blank
 
             }
 
@@ -140,14 +152,13 @@ class WelcomeFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // This space intentionally left blank
 
             }
         }
         editText.addTextChangedListener(nameWatcher)
     }
 
-    private fun checkForText(editText: EditText) : Boolean {
+    private fun checkForText(editText: EditText) : Boolean { //Returns if an editText is empty or not
         if (editText.text.isEmpty()) {
             editText.error = "Error, this cannot be empty."
             return false
@@ -157,22 +168,22 @@ class WelcomeFragment : Fragment() {
 
     private fun createUser() {
         this.user.activityLevel = activityLevelSpinner.selectedItem.toString()
-        userViewModel.addUser(this.user)
+
+        if (existingUser) { //If the user presses back from choose goal fragment to this fragment, update the user instead of adding a new one
+            userViewModel.updateUser(this.user)
+        } else {
+            userViewModel.addUser(this.user)
+        }
+
 
     }
 
     private fun checkForRadioButton(radioGroup: RadioGroup) : Boolean {
-        if (radioGroup.checkedRadioButtonId == -1) {
+        if (radioGroup.checkedRadioButtonId == -1) { //Checks whether a gender has been selected
             maleRadioButton.error = "Error, this cannot be empty"
             femaleRadioButton.error = "Error, this cannot be empty"
             return false
         }
         return true
-    }
-
-    companion object {
-        fun newInstance(): WelcomeFragment {
-            return WelcomeFragment()
-        }
     }
 }

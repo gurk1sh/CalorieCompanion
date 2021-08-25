@@ -13,6 +13,10 @@ class UserViewModel : ViewModel() {
         userRepository.addUser(user)
     }
 
+    fun updateUser(user: User) {
+        userRepository.updateUser(user)
+    }
+
     fun updateUserGoal(user: User) {
         userRepository.updateUserGoal(user)
     }

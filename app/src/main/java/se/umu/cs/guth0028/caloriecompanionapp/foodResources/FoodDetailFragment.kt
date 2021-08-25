@@ -16,16 +16,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.text.toLowerCase
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import se.umu.cs.guth0028.caloriecompanionapp.R
 import java.io.File
 import java.util.*
 
 private const val ARG_FOOD_ID = "food_id"
-private const val ARG_CATEGORY = "category"
+private const val CATEGORY = "category"
 
 class FoodFragment : Fragment() {
     private lateinit var food: Food
@@ -40,23 +43,32 @@ class FoodFragment : Fragment() {
     private lateinit var photoButton: ImageButton
     private lateinit var photoView: ImageView
     private lateinit var deleteButton: Button
-    private lateinit var food_list: ArrayList<Food>
-
-    interface Callbacks {
-        fun onFoodSavedOrDeleted(category: String) //interface used to move the user to the foodlistfragment when they either remove or save a new food
-    }
-
-    private var callbacks: Callbacks? = null
+    private lateinit var infoButton: ImageButton
+    private lateinit var infoText: TextView
 
     private val foodDetailViewModel: FoodDetailViewModel by lazy { //Instantiate a viewmodel object that holds food data
         ViewModelProvider(this).get(FoodDetailViewModel::class.java)
+    }
+
+    private var category: String = ""
+    private var foodList: List<Food> = emptyList()
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("food", this.food)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         food = Food()
         val foodId: UUID = arguments?.getSerializable(ARG_FOOD_ID) as UUID
+        category = arguments?.getString(CATEGORY) as String
         foodDetailViewModel.loadFood(foodId) //fetches food from database through viewmodel
+
+        if (savedInstanceState != null) {
+            this.food = savedInstanceState.getParcelable("food")!!
+        }
 
     }
 
@@ -75,6 +87,8 @@ class FoodFragment : Fragment() {
         photoButton = view.findViewById(R.id.food_camera) as ImageButton
         photoView = view.findViewById(R.id.food_photo) as ImageView
         deleteButton = view.findViewById(R.id.delete_food)
+        infoButton = view.findViewById(R.id.infoButton)
+        infoText = view.findViewById(R.id.infoText)
         photoFile = foodDetailViewModel.getPhotoFile(food)
         photoUri = FileProvider.getUriForFile(requireActivity(),
         "se.umu.cs.guth0028.caloriecompanionapp.fileprovider",
@@ -85,11 +99,18 @@ class FoodFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        foodDetailViewModel.allFoods.observe(viewLifecycleOwner, Observer {
+            foods ->
+            foodList = foods
+        })
+
         foodDetailViewModel.foodLiveData.observe( //Actively looks for changes to the foodrepository and updates the UI accordingly
             viewLifecycleOwner,
              Observer { food ->
                 food?.let {
-                    this.food = food
+                   this.food = food
+
                     photoFile = foodDetailViewModel.getPhotoFile(food)
                     photoUri = FileProvider.getUriForFile(requireActivity(),
                         "se.umu.cs.guth0028.caloriecompanionapp.fileprovider",
@@ -124,23 +145,60 @@ class FoodFragment : Fragment() {
         addTextChangedListener(foodFat)
         addTextChangedListener(foodCarbohydrates)
 
+       initOnClickListeners()
+    }
+
+    private fun initOnClickListeners() {
+
+        var visible = false
+
         saveButton.setOnClickListener { //Saves or updates the food in the database after usage of the save button, also moves user back to food list view
-            if (foodName.length() != 0) {
-                food.category = foodCategorySpinner.selectedItem.toString()
-                val currentFood = foodDetailViewModel.foodLiveData.value?.name
-                if (currentFood == foodName.text.toString()) {
-                    foodDetailViewModel.updateFood(food)
-                    callbacks?.onFoodSavedOrDeleted(arguments?.getSerializable(ARG_CATEGORY) as String)
-                } else {
-                    foodDetailViewModel.addFood(food)
-                    callbacks?.onFoodSavedOrDeleted(arguments?.getSerializable(ARG_CATEGORY) as String)
+            var alreadyExists = false
+
+            for (existingFood in foodList) {
+                if (existingFood.name.lowercase() == this.food.name.lowercase()) {
+                    alreadyExists = true
                 }
+            }
+
+            val navigate: Boolean
+
+            food.category = foodCategorySpinner.selectedItem.toString()
+            val currentFood = foodDetailViewModel.foodLiveData.value?.name
+            if (currentFood == foodName.text.toString()) {
+                foodDetailViewModel.updateFood(food)
+                navigate = true
+            } else {
+                if (!alreadyExists && foodName.length() != 0) {
+                    foodDetailViewModel.addFood(food)
+                    navigate = true
+                } else {
+                    foodName.error = "Error, you have to set a name that is not empty or doesn't already exist"
+                    navigate = false
+                }
+            }
+            if (navigate) {
+                val bundle = bundleOf("category" to category)
+                view?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.action_foodFragment_to_foodListFragment, bundle) }
             }
         }
 
         deleteButton.setOnClickListener { //removes food from database after usage of the delete button, also moves user back to food list view
             foodDetailViewModel.removeFood(food)
-            callbacks?.onFoodSavedOrDeleted(arguments?.getSerializable(ARG_CATEGORY) as String)
+            val bundle = bundleOf("category" to category)
+            view?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.action_foodFragment_to_foodListFragment, bundle) }
+        }
+
+        infoButton.setOnClickListener {
+
+            if (!visible) {
+                infoText.visibility = View.VISIBLE
+                visible = !visible
+            } else {
+                infoText.visibility = View.INVISIBLE
+                visible = !visible
+            }
+
         }
 
         photoButton.apply { //Opens the camera activity if uri permission has been given
@@ -163,11 +221,6 @@ class FoodFragment : Fragment() {
             }
             updateUI() //refreshes UI so image can be displayed
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callbacks = context as Callbacks? //Stash the activity instance hosting the fragment
     }
 
     private fun updateUI() {
@@ -198,11 +251,6 @@ class FoodFragment : Fragment() {
         } else {
             photoView.setImageDrawable(null)
         }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null //Null the callbacks because we cannot access the activity or count on it to exist
     }
 
     private fun addTextChangedListener(editText: EditText) { //Listens to changed text for the fields in the FoodDetailView, actively updates the food object attributes
@@ -237,17 +285,5 @@ class FoodFragment : Fragment() {
             }
         }
         editText.addTextChangedListener(nameWatcher)
-    }
-
-    companion object { //Is used to create a new instance of FoodFragment which requires a foodId to be used so it knows what to display (name, protein, fat etc)
-        fun newInstance(foodId: UUID, category: String): FoodFragment {
-            val args = Bundle().apply {
-                putSerializable(ARG_FOOD_ID, foodId)
-                putSerializable(ARG_CATEGORY, category)
-            }
-            return FoodFragment().apply {
-                arguments = args
-            }
-        }
     }
 }
